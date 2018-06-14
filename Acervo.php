@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+    <?php
+        include('Model/Veiculo.php');
+        session_start();
+    ?>
 
 <head>
 
@@ -25,14 +29,6 @@
 
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
 <body>
@@ -105,7 +101,7 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Cadastro de Sócios</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Nosso Acervo</a>
+                            <a href="Controler/controlerVeiculos.php?opcao=1"><i class="fas fa-car fa-fw"></i> Nosso Acervo</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-envelope fa-fw"></i> Fale Conosco</a>
@@ -125,7 +121,37 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Nosso Acervo</h1>
                 </div>
-                
+                <div class="container">
+                    <div class="card-deck mb-3 text-center">
+                    <?php
+                        if(isset($_SESSION['veiculos'])) {
+                            $veiculos = $_SESSION['veiculos'];
+                            foreach($veiculos as $veiculo) {                            
+                    ?>
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal"><?=$veiculo->nome;?></h4>
+                            </div>
+                            <div class="card-body">
+                                <img src="imagens/user-circle.svg" width="120px" height="120px" />
+                                <ul class="list-unstyled mt-3 mb-4">
+                                <li>Placa? <?=$veiculo->placa?></li>
+                                <li>Fabricante: <?=$veiculo->fabricante?></li>
+                                <li>Ano de Fabricação: <?=$veiculo->anoFabricacao?></li>
+                                <li>Opcionais: <?=$veiculo->opcionais?></li>
+                                <li>Motor: <?=$veiculo->motorizacao?></li>
+                                <li>Valor Base: <?=$veiculo->valorBase?></li>
+                              </ul>
+                            </div>
+                        </div>
+                    <?php
+                        }
+                        } else {
+                            'Nenhum veiculo cadastrado';
+                        }
+                    ?>
+                    </div>
+                </div>
             </div>
         </div>
 
